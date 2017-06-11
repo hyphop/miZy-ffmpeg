@@ -1,0 +1,11 @@
+diff -pruN ffmpeg-3.3.1/configure ffmpeg-3.3.1.a/configure
+--- ffmpeg-3.3.1/configure	2017-04-13 08:55:54.000000000 +0700
++++ ffmpeg-3.3.1.a/configure	2017-06-09 13:10:49.000000000 +0700
+@@ -4936,6 +4936,7 @@ case $target_os in
+         add_cppflags -U__STRICT_ANSI__
+         ;;
+     linux)
++        add_cppflags -D_GNU_SOURCE
+         enable dv1394
+         enable section_data_rel_ro
+         ;;

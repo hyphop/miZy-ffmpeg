@@ -1,0 +1,20 @@
+#!/bin/sh
+
+export LD_LIBRARY_PATH=/tmp/zero_builder/ffmpeg-3.3.1/ipkg-install/usr/lib
+
+/tmp/zero_builder/ffmpeg-3.3.1/../toolchain-arm_cortex-a8.vfpv3_gcc-5.3.0_musl-1.1.16_eabi/bin/arm-openwrt-linux-gcc  \
+-D_GNU_SOURCE \
+-D_ISOC99_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ -D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600  \
+-I/tmp/zero_builder/ffmpeg-3.3.1/ipkg-install/usr/include  \
+-march=armv7-a -std=c11 -fomit-frame-pointer -marm -pthread -c -o $0.o $0.c
+
+
+#echo /tmp/zero_builder/ffmpeg-3.3.1/../toolchain-arm_cortex-a8.vfpv3_gcc-5.3.0_musl-1.1.16_eabi/bin/arm-openwrt-linux-gcc \
+#    -march=armv7-a -Wl,$LD_LIBRARY_PATH/libasound.so.2.0.0 -Wl,-z,noexecstack \
+#    -o /tmp/ffconf.tvm4mhVo $0.o  -lm -pthread
+
+/tmp/zero_builder/ffmpeg-3.3.1/../toolchain-arm_cortex-a8.vfpv3_gcc-5.3.0_musl-1.1.16_eabi/bin/arm-openwrt-linux-gcc \
+    -L/tmp/zero_builder/ffmpeg-3.3.1/ipkg-install/usr/lib \
+    -march=armv7-a -Wl,--as-needed -Wl,-z,noexecstack \
+    -o $0.exe $0.o -lasound -lm -pthread

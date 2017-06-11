@@ -1,0 +1,49 @@
+#!/bin/sh
+
+## hyphop ##
+
+. ./,config
+
+work_dir=`pwd`
+
+[ -f $pkg_path ] || {
+    echo "[i] get source $pkg_url" 1>&2
+    wget -O $pkg_path $pkg_url
+}
+
+[ -d $pkg_dir ] || {
+    echo "[i] unpack $pkg_dir" 1>&2
+    tar -C .. -xf $pkg_path
+}
+
+[ -f $tc_squash_path ] || {
+    echo "[i] get tc tc_url" 1>&2
+    wget -O $tc_squash_path $tc_url
+}
+
+[ -d $extra_path ] || {
+    echo "[i] get extra libs" 1>&2
+    wget -O $extra_pkg_path $extra_url
+    tar -C .. -xf $extra_pkg_path
+}
+
+[ -d $tc_path ] || {
+    mkdir $tc_path
+}
+
+[ -L ../tc ] || { 
+    ln -s $tc_dir ../tc
+}
+
+$tc_path/bin/arm-openwrt-linux-gcc --version 2>/dev/null 1>/dev/null || {
+    echo "[i] tc mount $tc_squash_path $tc_path" 1>&2
+    mount $tc_squash_path $tc_path
+}
+
+cd $pkg_dir
+
+for p in $work_dir/patches/*.patch; do
+    echo "[i] apply patch $p" 1>&2
+    patch -p1 < $p
+done
+

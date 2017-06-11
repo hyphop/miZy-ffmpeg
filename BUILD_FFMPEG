@@ -1,0 +1,89 @@
+#!/bin/sh
+
+## hyphop ##
+
+. ./,config
+
+echo "[i] build miZy FFMPEG"
+path=../toolchain-arm_cortex-a9.neon_gcc-5.3.0_musl-1.1.15_eabi/bin
+path=../toolchain-arm_cortex-a8.vfpv3_gcc-5.3.0_musl-1.1.16_eabi/bin
+path=../tc/bin
+
+pref=arm-openwrt-linux-
+
+#export STAGING_DIR=$PWD/$path
+export STAGING_DIR=$path
+
+#export PATH="$PATH:$STAGING_DIR"
+
+PKG_INSTALL_DIR=bin
+
+export TARGET_CROSS="$STAGING_DIR/$pref"
+export ARCH=arm
+export CROSS_COMPILE=$pref
+
+cd $pkg_dir
+
+./configure \
+--enable-cross-compile \
+--cross-prefix="$TARGET_CROSS" \
+--arch="$ARCH" \
+--target-os=linux \
+--extra-cflags="-I../extra/include" \
+--extra-ldflags="-L../extra/lib" \
+--prefix="/usr" \
+--pkg-config="pkg-config" \
+--disable-all \
+--disable-armv5te \
+--disable-armv6 \
+--disable-armv6t2 \
+--disable-debug \
+--disable-decoders \
+--disable-demuxers \
+--disable-doc \
+--disable-encoders \
+--disable-everything \
+--disable-fast-unaligned \
+--disable-filters \
+--disable-iconv \
+--disable-indevs \
+--disable-libxcb \
+--disable-muxers \
+--disable-outdevs \
+--disable-parsers \
+--disable-postproc \
+--disable-runtime-cpudetect \
+--disable-swscale \
+--disable-symver \
+--disable-zlib \
+--enable-decoder=aac,ac3,alac,opus,ape,flac,mp1,mp2,mp3,mpc7,mpc8,tta,vorbis,wavpack,wmav1,wmav2,pcm_*,dca,dsd*,dst \
+--enable-demuxer=aac,ac3,ape,asf,flac,mp3,mpc,mov,mpc8,ogg,tta,wav,wv,rtsp,dts,dsf,dst,iff \
+--enable-encoder=pcm_*,opus,flac \
+--enable-filter=aresample,volume,replaygain,pan,afade,adelay,sine,anoisesrc,acrossfade,aeval,aevalsrc,join \
+--enable-indev=alsa,lavfi \
+--enable-muxer=null,wav,pcm_*,ffmetadata,tee,flac,ogg,oga,opus \
+--enable-nonfree \
+--enable-outdev=alsa \
+--enable-parser=aac,ac3,mpegaudio \
+--disable-protocols \
+--enable-protocol=file,pipe,http,tcp,udp,rtp \
+--enable-pthreads \
+--enable-rdft \
+--enable-small \
+--disable-shared \
+--enable-static \
+--enable-avcodec \
+--enable-avfilter \
+--enable-avformat \
+--enable-ffmpeg \
+--enable-avdevice \
+--enable-swresample \
+--disable-xlib \
+
+# exit
+
+[ -d $PKG_INSTALL_DIR ] || mkdir $PKG_INSTALL_DIR
+make DESTDIR="$PKG_INSTALL_DIR" -j 32
+
+make DESTDIR="$PKG_INSTALL_DIR" install
+

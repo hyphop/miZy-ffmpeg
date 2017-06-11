@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+%a=();
+%b=();
+while ( <> ) {
+    #warn "+  $_"
+    chomp;
+
+    s/\\//g;
+    if ( /\-+(\w+)\-(\w+)=/ ) {
+    $a{"--$1-$2"} .= $';
+    } elsif ( /\-+(\w+)\-(\S+)/ ) {
+	$a{"--$1-$2"} = ""
+    }
+}
+
+print "./configure \\\n";
+
+for ( sort keys %a ) {
+    my $v= $a{$_};
+    $v=~s/^\s+//g;
+    $v=~s/\s+$//g;
+    $v=~s/\s+/,/g;
+    if ( $v ) {
+    print "$_=$v \\\n";
+    } else {
+    print "$_ \\\n";
+    }
+}
+
+print "\n";
