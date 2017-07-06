@@ -64,7 +64,9 @@ cd $pkg_dir
 ,apng,png,rawvideo,mjpeg,zlib \
 --enable-filter=aresample,volume,replaygain,pan,afade,adelay,sine,anoisesrc,acrossfade,aeval,aevalsrc,join\
 ,scale,rotate\
-,showfreqs,showwaves,showvolume,showspectrum \
+,abitscope,avectorscope,aphasemeter,ahistogram,showfreqs,showwaves,showvolume,showspectrum\
+,showspectrumpic,showwavespic\
+,life,mandelbrot,mptestsrc,testsrc \
 --enable-indev=alsa,lavfi \
 --enable-muxer=null,wav,pcm_*,ffmetadata,tee,flac,ogg,oga,opus\
 ,rawvideo,mjpeg,image2 \
