@@ -11,5 +11,5 @@ miZy cross-compile example for custom FFMPEG arm
     cd miZy-ffmpeg
 
     ./prepare
-    ./BUILD_FFMPEG
+    ./BUILD_FFMPEG_A 
 
