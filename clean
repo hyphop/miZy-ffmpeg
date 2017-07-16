@@ -1,0 +1,11 @@
+#!/bin/sh
+
+## hyphop ##
+
+. ./,config
+
+[ -d $pkg_dir ] && {
+	echo "[i] rm $pkg_dir"
+	rm -r $pkg_dir
+}
+

@@ -1,0 +1,71 @@
+diff -pruN ffmpeg-3.3.2/libavformat/http.c ffmpeg-3.3.2.2/libavformat/http.c
+--- ffmpeg-3.3.2/libavformat/http.c	2017-06-07 09:04:02.000000000 +0700
++++ ffmpeg-3.3.2.2/libavformat/http.c	2017-07-11 21:33:31.589411180 +0700
+@@ -1447,6 +1447,8 @@ static void update_metadata(HTTPContext
+         val += 2;
+ 
+         av_dict_set(&s->metadata, key, val, 0);
++		// hyphop //
++        av_log(s, AV_LOG_WARNING, "ICY_META %s=%s\n", key, val);
+ 
+         next = end + 2;
+     }
+diff -pruN ffmpeg-3.3.2/libavformat/oggparseflac.c ffmpeg-3.3.2.2/libavformat/oggparseflac.c
+--- ffmpeg-3.3.2/libavformat/oggparseflac.c	2017-06-07 09:03:55.000000000 +0700
++++ ffmpeg-3.3.2.2/libavformat/oggparseflac.c	2017-07-11 21:35:12.285414642 +0700
+@@ -125,11 +125,31 @@ fail:
+     return ret;
+ }
+ 
++// hyphop //
++// update meta for OGG FLAC chained stream
++static int flac_packet(AVFormatContext *avf, int idx)
++{
++    struct ogg *ogg              = avf->priv_data;
++    struct ogg_stream *os        = &ogg->streams[idx];
++    AVStream *st                 = avf->streams[idx];
++    uint8_t *packet              = os->buf + os->pstart;
++
++	    if ( (*packet & 0x7F) == FLAC_METADATA_TYPE_VORBIS_COMMENT) {
++ 			//fprintf(stderr, "%s", "[i] FLAC update meta !!!\n" );
++	    	av_dict_free(&st->metadata);
++        	ff_vorbis_stream_comment(avf, st, os->buf + os->pstart + 4, os->psize - 4);
++		}
++
++    return 1;
++
++}
++
+ const struct ogg_codec ff_flac_codec = {
+     .magic = "\177FLAC",
+     .magicsize = 5,
+     .header = flac_header,
+     .nb_header = 2,
++    .packet           = flac_packet,
+ };
+ 
+ const struct ogg_codec ff_old_flac_codec = {
+diff -pruN ffmpeg-3.3.2/libavformat/oggparseopus.c ffmpeg-3.3.2.2/libavformat/oggparseopus.c
+--- ffmpeg-3.3.2/libavformat/oggparseopus.c	2017-06-07 09:03:55.000000000 +0700
++++ ffmpeg-3.3.2.2/libavformat/oggparseopus.c	2017-07-11 21:40:33.000000000 +0700
+@@ -148,6 +148,20 @@ static int opus_packet(AVFormatContext *
+         }
+         os->lastpts                 =
+         os->lastdts                 = os->granule - duration;
++    } else {
++			if (os->flags & OGG_FLAG_BOS) {
++		        priv->need_comments = 1;
++			}
++	}
++
++    if (priv->need_comments) {
++        if (os->psize < 8 || memcmp(packet, "OpusTags", 8))
++            return AVERROR_INVALIDDATA;
++ 		fprintf(stderr, "%s", "[i] OPUS update meta !!!\n" );
++	    av_dict_free(&st->metadata);
++        ff_vorbis_stream_comment(avf, st, packet + 8, os->psize - 8);
++        priv->need_comments--;
++        return 0;
+     }
+ 
+     if ((ret = opus_duration(packet, os->psize)) < 0)

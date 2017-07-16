@@ -44,8 +44,8 @@ cd $pkg_dir
 --prefix="/usr" \
 --pkg-config="pkg-config" \
 $ffconfig \
---disable-shared \
---enable-static 
+--enable-shared \
+--disable-static 
 
 cd $p
 

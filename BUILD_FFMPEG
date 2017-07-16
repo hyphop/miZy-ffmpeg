@@ -1,0 +1,16 @@
+#!/bin/sh
+
+## hyphop ##
+
+. ./,config
+
+[ "$PKG_INSTALL_DIR" ] ||  PKG_INSTALL_DIR=/tmp/ffmpeg-install
+
+[ -d $PKG_INSTALL_DIR ] || mkdir $PKG_INSTALL_DIR
+
+echo "[i] install dir $PWD $PKG_INSTALL_DIR"
+
+make -C $pkg_dir DESTDIR="$PKG_INSTALL_DIR" -j 32
+
+make -C $pkg_dir DESTDIR="$PKG_INSTALL_DIR" install
+

@@ -1,0 +1,13 @@
+diff -pruN ffmpeg-3.3.2/libavcodec/flacdec.c ffmpeg-3.3.2.2/libavcodec/flacdec.c
+--- ffmpeg-3.3.2/libavcodec/flacdec.c	2017-06-07 09:03:53.000000000 +0700
++++ ffmpeg-3.3.2.2/libavcodec/flacdec.c	2017-07-16 23:43:40.912534283 +0700
+@@ -471,7 +471,8 @@ static int decode_frame(FLACContext *s)
+     GetBitContext *gb = &s->gb;
+     FLACFrameInfo fi;
+ 
+-    if ((ret = ff_flac_decode_frame_header(s->avctx, gb, &fi, 0)) < 0) {
++//    if ((ret = ff_flac_decode_frame_header(s->avctx, gb, &fi, 0)) < 0) {
++    if ((ret = ff_flac_decode_frame_header(s->avctx, gb, &fi, 127)) < 0) {
+         av_log(s->avctx, AV_LOG_ERROR, "invalid frame header\n");
+         return ret;
+     }

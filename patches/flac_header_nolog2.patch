@@ -1,0 +1,11 @@
+diff -pruN ffmpeg-3.3.2/libavcodec/flac.c ffmpeg-3.3.2.2/libavcodec/flac.c
+--- ffmpeg-3.3.2/libavcodec/flac.c	2017-06-07 09:03:53.000000000 +0700
++++ ffmpeg-3.3.2.2/libavcodec/flac.c	2017-07-16 23:47:28.716542116 +0700
+@@ -54,6 +54,7 @@ int ff_flac_decode_frame_header(AVCodecC
+ 
+     /* frame sync code */
+     if ((get_bits(gb, 15) & 0x7FFF) != 0x7FFC) {
++		if (log_level_offset < 120)
+         av_log(avctx, AV_LOG_ERROR + log_level_offset, "invalid sync code\n");
+         return AVERROR_INVALIDDATA;
+     }

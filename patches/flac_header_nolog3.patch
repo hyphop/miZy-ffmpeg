@@ -1,0 +1,13 @@
+diff -pruN ffmpeg-3.3.2/libavcodec/flac_parser.c ffmpeg-3.3.2.2/libavcodec/flac_parser.c
+--- ffmpeg-3.3.2/libavcodec/flac_parser.c	2017-06-07 09:03:53.000000000 +0700
++++ ffmpeg-3.3.2.2/libavcodec/flac_parser.c	2017-07-17 00:11:47.296592270 +0700
+@@ -482,7 +482,8 @@ static int get_best_header(FLACParseCont
+         *poutbuf_size = child->offset - header->offset;
+ 
+         /* If the child has suspicious changes, log them */
+-        check_header_mismatch(fpc, header, child, 0);
++//      check_header_mismatch(fpc, header, child, 0);
++        check_header_mismatch(fpc, header, child, AV_LOG_DEBUG);
+     }
+ 
+     if (header->fi.channels != fpc->avctx->channels ||

@@ -17,3 +17,4 @@ extra_url=https://github.com/hyphop/pkg/releases/download/mirror/$extra_pkg
 extra_pkg_path=../$extra_pkg
 extra_path=../$extra_dir
 
+#PKG_INSTALL_DIR=/tmp/ffmpeg-install

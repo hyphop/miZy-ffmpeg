@@ -1,0 +1,11 @@
+#!/bin/sh
+
+## hyphop ##
+
+PKG_INSTALL_DIR=/tmp/ffmpeg-install
+TO=root@zeru:/usr/lib/
+
+ls $PKG_INSTALL_DIR/usr/lib/*.so.*
+
+rsync -av --inplace $PKG_INSTALL_DIR/usr/lib/*.so.* $TO
+rsync -av --inplace $PKG_INSTALL_DIR/usr/bin/ff* $TO

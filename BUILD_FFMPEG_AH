@@ -1,0 +1,37 @@
+#!/bin/sh
+
+## hyphop ##
+
+. ./,config
+
+
+echo "[i] build miZy FFMPEG host"
+
+[ -d $pkg_dir ] || {
+echo "[e] not found $pkg_dir"
+echo "[i] ./prepare - at first"
+exit 1
+}
+
+export PKG_INSTALL_DIR=/tmp/ffmpeg-x86
+
+. ./ff_config_audio
+
+p=$PWD
+cd $pkg_dir
+
+./configure \
+--arch="$ARCH" \
+--target-os=linux \
+--extra-cflags="-I../extra/include" \
+--extra-ldflags="-L../extra/lib" \
+--prefix="/usr" \
+--pkg-config="pkg-config" \
+$ffconfig \
+--disable-shared \
+--enable-static 
+
+cd $p
+
+./BUILD_FFMPEG
+
