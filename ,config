@@ -1,5 +1,8 @@
 
 ver=3.3.2
+ver=3.3.4
+ver=3.4
+
 pkg_source=ffmpeg-$ver.tar.bz2
 pkg_path=../$pkg_source
 pkg_dir=../ffmpeg-$ver
