@@ -6,5 +6,6 @@ diff -pruN ffmpeg-3.3.1/configure ffmpeg-3.3.1.a/configure
          ;;
      linux)
 +        add_cppflags -D_GNU_SOURCE
+         enable dv1394
          enable section_data_rel_ro
          ;;

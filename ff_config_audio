@@ -27,7 +27,7 @@ ffconfig="$ffconfig\
 --disable-symver \
 --disable-zlib \
 --enable-decoder=aac,ac3,alac,opus,ape,flac,mp1,mp2,mp3,mpc7,mpc8,tta,vorbis,wavpack,wmav1,wmav2,pcm_*,dca,dsd*,dst \
---enable-demuxer=aac,ac3,ape,asf,flac,mp3,mpc,mov,mpc8,ogg,tta,wav,wv,rtsp,dts,dsf,dst,iff \
+--enable-demuxer=aac,ac3,ape,asf,flac,mp3,mpc,mov,mpc8,ogg,tta,wav,wv,rtsp,dts,dsf,dst,iff,sap,rtp \
 --enable-encoder=pcm_*,opus,flac \
 --enable-filter=aresample,volume,replaygain,pan,afade,adelay,sine,anoisesrc,acrossfade,aeval,aevalsrc,join\
 ,crossfeed,surround,headphone,superequalizer \
