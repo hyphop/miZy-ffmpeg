@@ -8,6 +8,8 @@ work_dir=`pwd`
 
 which gcc 2>/dev/null 1>/dev/null || apt-get install build-essential
 which make 2>/dev/null 1>/dev/null || apt-get install build-essential
+which yasm 2>/dev/null 1>/dev/null || apt-get install yasm
+which pkg-config 2>/dev/null 1>/dev/null || apt-get install pkg-config
 
 [ -f $pkg_path ] || {
     echo "[i] get source $pkg_url" 1>&2
