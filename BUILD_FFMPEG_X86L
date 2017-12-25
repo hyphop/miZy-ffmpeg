@@ -1,0 +1,34 @@
+#!/bin/sh
+
+## hyphop ##
+
+. ./,config
+
+echo "[i] build miZy FFMPEG arm"
+
+[ -d $pkg_dir ] || {
+echo "[e] not found $pkg_dir"
+echo "[i] ./prepare - at first"
+exit 1
+}
+
+export PKG_INSTALL_DIR=/tmp/ffmpeg-x86
+
+. ./ff_config_audio_video
+
+p=$PWD
+cd $pkg_dir
+
+./configure \
+--extra-cflags="-I../extra/include" \
+--extra-ldflags="-L../extra/lib" \
+--prefix="/usr" \
+--pkg-config="pkg-config" \
+$ffconfig \
+--enable-shared \
+--disable-static 
+
+cd $p
+
+./BUILD_FFMPEG
+
