@@ -4,7 +4,7 @@
 
 . ./,config
 
-echo "[i] build miZy FFMPEG arm"
+echo "[i] build miZy FFMPEG x86 static"
 
 [ -d $pkg_dir ] || {
 echo "[e] not found $pkg_dir"
@@ -20,6 +20,8 @@ p=$PWD
 cd $pkg_dir
 
 ./configure \
+--arch="$ARCH" \
+--target-os=linux \
 --extra-cflags="-I../extra/include" \
 --extra-ldflags="-L../extra/lib" \
 --prefix="/usr" \

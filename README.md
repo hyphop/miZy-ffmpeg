@@ -13,3 +13,9 @@ miZy cross-compile example for custom FFMPEG arm
     ./prepare
     ./BUILD_FFMPEG_A 
 
+
+## x86 debian test
+
+    ./prepare.x86
+    ./BUILD_FFMPEG_X86
+	

@@ -11,6 +11,8 @@ which make 2>/dev/null 1>/dev/null || apt-get install build-essential
 which yasm 2>/dev/null 1>/dev/null || apt-get install yasm
 which pkg-config 2>/dev/null 1>/dev/null || apt-get install pkg-config
 
+pkg-config zlib --libs || apt-get install zlib1g-dev
+
 [ -f $pkg_path ] || {
     echo "[i] get source $pkg_url" 1>&2
     wget -O $pkg_path $pkg_url
