@@ -1,0 +1,30 @@
+#!/bin/sh
+
+## hyphop ##
+
+. ./,config
+
+work_dir=`pwd`
+
+which gcc 2>/dev/null 1>/dev/null || apt-get install build-essential
+which make 2>/dev/null 1>/dev/null || apt-get install build-essential
+
+[ -f $pkg_path ] || {
+    echo "[i] get source $pkg_url" 1>&2
+    wget -O $pkg_path $pkg_url
+}
+
+[ -d $pkg_dir ] || {
+    echo "[i] unpack $pkg_dir" 1>&2
+    tar -C .. -xf $pkg_path
+}
+
+exit 0
+
+cd $pkg_dir
+
+for p in $work_dir/patches/*.patch; do
+    echo "[i] apply patch $p" 1>&2
+    patch -p1 < $p
+done
+
