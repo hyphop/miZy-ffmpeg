@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+## hyphop ##
+
+while (<>){
+	if ( /FFMPEG_CONFIGURATION/ ) {
+		print "#define FFMPEG_CONFIGURATION \"miZy $ENV{VARIANT}\"\n"
+	}
+	else {
+		print $_;
+	}
+}

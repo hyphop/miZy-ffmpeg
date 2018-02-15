@@ -10,7 +10,6 @@
 
 echo "[i] install dir $PWD $PKG_INSTALL_DIR"
 
-make -C $pkg_dir DESTDIR="$PKG_INSTALL_DIR" -j 32 "$@" && \
+make -C $pkg_dir DESTDIR="$PKG_INSTALL_DIR" V=s
 
-make -C $pkg_dir DESTDIR="$PKG_INSTALL_DIR" install
 
